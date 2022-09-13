@@ -1,0 +1,214 @@
+Comandos SQL
+
+
+# Create
+
+def create_pedido():
+    data = e_data_pedido.get()
+    gasto = e_gasto.get()
+    numero = e_numero_pedido.get()
+    comando = f'INSERT INTO pedido (dataPedido,gasto,numero) VALUES ("{data}",{gasto},"{numero}")'
+    cursor.execute(comando)
+    conexao.commit()
+
+
+def create_endereco():
+    cep = e_cep.get()
+    estado = e_estado.get()
+    cidade = e_cidade.get()
+    complemento = e_complemento.get()
+    cod_end = e_cod_endereco.get()
+    comando = f'INSERT INTO endereco (cep,complemento,estado,cidade) VALUES ("{cep}","{complemento}","{estado}","{cidade}")'
+    cursor.execute(comando)
+    conexao.commit()
+
+
+def create_cartao():
+    numero = e_cartao_credito.get()
+    vencimento = e_cartao_vencimento.get()
+    cvv = e_cartao_cvv.get()
+    comando = f'INSERT INTO cartao (numero,vencimento,cvv) VALUES ("{numero}","{vencimento}","{cvv}")'
+    cursor.execute(comando)
+    conexao.commit()
+
+def create_cliente():
+    global e_sacola,e_data_nascimento,e_nome,e_cpf
+    cpf = e_cpf.get()
+    nome = e_nome.get()
+    dataNasc = e_data_nascimento.get()
+    sacola = e_sacola.get()
+    comando = f'INSERT INTO cliente (cpf,nome,dataNasc,sacola) VALUES ("{cpf}","{nome}","{dataNasc}",{sacola})'
+    cursor.execute(comando)
+    conexao.commit()
+
+def create_sacola():
+    global e_op,e_quantidade_sacola,e_cod_produto,e_cpf_produto
+    op = e_op.get()
+    quantidade = e_quantidade_sacola.get()
+    cod_produto = e_cod_produto.get()
+    cpf = e_cpf_produto.get()
+    comando = f'INSERT INTO alterasacola (cod_prod, op, qtd) VALUES ({cod_produto},"{op}",{quantidade})'
+    cursor.execute(comando)
+    conexao.commit()
+    
+def create_fornecedor():
+    global e_CNPJ_fornecedor,e_nome_fornecedor
+    cnpj = e_CNPJ_fornecedor.get()
+    nome = e_nome_fornecedor.get()
+    comando = f'INSERT INTO fornecedor (cnpj,nome) VALUES ("{cnpj}","{nome}")'
+    cursor.execute(comando)
+    conexao.commit()
+
+
+# Read
+
+def select_cliente():
+    global e_cpf
+    cpf = e_cpf.get()
+    comando = f'SELECT * FROM cliente WHERE cpf = "{cpf}"'
+    cursor.execute(comando)
+    resultado = cursor.fetchall()
+    print(resultado)
+
+def select_pedido():
+    cod_ped = e_cod_ped.get()
+    comando = f'SELECT * FROM pedido WHERE cod_ped = {cod_ped}'
+    cursor.execute(comando)
+    resultado = cursor.fetchall()
+    print(resultado)
+
+
+def select_endereco():
+    cod_end = e_cod_endereco.get()
+    comando = f'SELECT * FROM endereco WHERE cod_end = {cod_end}'
+    cursor.execute(comando)
+    resultado = cursor.fetchall()
+    print(resultado)
+
+
+def select_cartao():
+    numero = e_cartao_credito.get()
+    comando = f'SELECT * FROM cartao WHERE numero = "{numero}"'
+    cursor.execute(comando)
+    resultado = cursor.fetchall()
+    print(resultado)
+
+def select_produto():
+    global e_cod_op_produto
+    cod_op = e_cod_op_produto.get()
+    comando = f'SELECT * FROM alterasacola WHERE cod_op = {cod_op}'
+    cursor.execute(comando)
+    resultado = cursor.fetchall()
+    print(resultado)
+    
+def select_fornecedor():
+    global e_CNPJ_fornecedor
+    cnpj = e_CNPJ_fornecedor.get()
+    comando = f'SELECT * FROM fornecedor WHERE cnpj = "{cnpj}"'
+    cursor.execute(comando)
+    resultado = cursor.fetchall()
+    print(resultado)
+
+# Update
+
+def update_cliente():
+    global e_sacola,e_cpf,e_nome,e_data_nascimento
+    sacola = e_sacola.get()
+    cpf = e_cpf.get()
+    nome = e_nome.get()
+    dataNasc = e_data_nascimento.get()
+    comando = f'UPDATE cliente SET cpf = "{cpf}",nome = "{nome}",dataNasc = "{dataNasc}",sacola ={sacola}  WHERE cpf = "{cpf}"'
+    cursor.execute(comando)
+    conexao.commit()
+
+def update_pedido():
+    data = e_data_pedido.get()
+    gasto = e_gasto.get()
+    numero = e_numero_pedido.get()
+    cod_ped = e_cod_ped.get()
+    comando = f'UPDATE pedido SET dataPedido = "{data}",gasto = {gasto},numero = "{numero}" WHERE cod_ped = {cod_ped}'
+    cursor.execute(comando)
+    conexao.commit()
+
+
+def update_endereco():
+    cidade = e_cidade.get()
+    estado = e_estado.get()
+    cep = e_cep.get()
+    cod_end = e_cod_endereco.get()
+    complemento = e_complemento.get()
+    comando = f'UPDATE endereco SET cep = "{cep}",complemento = "{complemento}",estado = "{estado}",cidade = "{cidade}" WHERE cod_end = {cod_end}'
+    cursor.execute(comando)
+    conexao.commit()
+
+
+def update_cartao():
+    numero = e_cartao_credito.get()
+    cvv = e_cartao_cvv.get()
+    vencimento = e_cartao_vencimento.get()
+    comando = f'UPDATE cartao SET numero = "{numero}",vencimento = "{vencimento}",cvv = "{cvv}" WHERE numero = "{numero}"'
+    cursor.execute(comando)
+    conexao.commit()
+
+def update_produto():
+    global e_op, e_quantidade_sacola, e_cod_produto, e_cpf_produto, e_cod_op_produto
+    op = e_op.get()
+    cod_op = e_cod_op_produto.get()
+    quantidade = e_quantidade_sacola.get()
+    cod_produto = e_cod_produto.get()
+    cpf = e_cpf_produto.get()
+    comando = f'UPDATE alterasacola SET op = "{op}",qtd = "{quantidade}",cod_prod = {cod_produto} WHERE cod_op = {cod_op}'
+    cursor.execute(comando)
+    conexao.commit()
+
+
+def update_fornecedor():
+    global e_CNPJ_fornecedor, e_nome_fornecedor
+    cnpj = e_CNPJ_fornecedor.get()
+    nome = e_nome_fornecedor.get()
+    comando = f'UPDATE fornecedor SET cnpj = "{cnpj}",nome = "{nome}" WHERE cnpj = "{cnpj}"'
+    cursor.execute(comando)
+    conexao.commit()
+
+# Delete
+
+def delete_cliente():
+    global e_cpf
+    cpf = e_cpf.get()
+    comando = f'DELETE FROM cliente WHERE cpf = "{cpf}"'
+    cursor.execute(comando)
+    conexao.commit()
+    
+def delete_fornecedor():
+    global e_CNPJ_fornecedor
+    cnpj = e_CNPJ_fornecedor.get()
+    comando = f'DELETE FROM fornecedor WHERE cnpj = "{cnpj}"'
+    cursor.execute(comando)
+    conexao.commit()
+
+def delete_produto():
+    global e_cod_op_produto
+    cod_op = e_cod_op_produto.get()
+    comando = f'DELETE FROM alterasacola WHERE cod_op = {cod_op}'
+    cursor.execute(comando)
+    conexao.commit()
+    
+def delete_pedido():
+    cod_ped = e_cod_ped.get()
+    comando = f'DELETE FROM pedido WHERE cod_ped = "{cod_ped}"'
+    cursor.execute(comando)
+    conexao.commit()
+
+
+def delete_endereco():
+    cod_end = e_cod_endereco.get()
+    comando = f'DELETE FROM endereco WHERE cod_end = "{cod_end}"'
+    cursor.execute(comando)
+    conexao.commit()
+
+
+def delete_cartao():
+    numero = e_cartao_credito.get()
+    comando = f'DELETE FROM cartao WHERE numero = "{numero}"'
+    cursor.execute(comando)
+    conexao.commit()
